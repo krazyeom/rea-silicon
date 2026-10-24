@@ -30,7 +30,9 @@ When the user provides an application path (e.g., `/Applications/Example.app`, `
    - `docs/en/SPEC_TEMPLATE.md`
    - `docs/en/PROMPTS.md`
 2. **Apple Silicon Native Priority**: Unless explicitly requested otherwise, all rebuilds MUST target `arm64-apple-macosx` using modern **Swift 6 / SwiftUI / AppKit**.
-3. **Clean-Room Isolation**: Under no circumstances should original proprietary source code or disassembly listings be copied into the final code. Implementation must proceed strictly through `SPEC.md`.
+3. **Witty Homage Naming Rule**: Never reuse or copy the exact proprietary name/trademark of the original application. Invent a witty, humorous homage or parody name evoking the core feature (e.g., `Calculator` -> `Calcuroo`, `Postman` -> `PacketBoy`, `Slack` -> `Taut`).
+4. **Distinctive Branding & App Icon Requirement**: Every rebuilt application MUST be equipped with custom visual identity: signature theme colors, SF Symbols/emoji, and native macOS squircle icon (`AppIcon.icns`) generated via `./scripts/generate_app_icon.swift`.
+5. **Clean-Room Isolation**: Under no circumstances should original proprietary source code or disassembly listings be copied into the final code. Implementation must proceed strictly through `SPEC.md`.
 
 ---
 
@@ -63,18 +65,23 @@ Formulate the architecture plan according to `docs/en/MAC_SILICON_REBUILD_GUIDE.
 - If **CLI tool / Daemon**: Plan a modern Swift package with `swift-argument-parser` and `SMAppService`.
 - If **GUI tool (C++/Qt/.NET)**: Plan modern declarative SwiftUI views with `@Observable` state models.
 
-### Step 3: Room A – Extract Black-Box Specification (`SPEC.md`)
-1. Utilize disassemblers/decompilers (Ghidra, Hopper, strings, AST analysis) to understand core business logic.
-2. Fill out `SPEC.md` using the template at `docs/en/SPEC_TEMPLATE.md`.
-3. Ensure all algorithmic steps are written in pseudo-code and test vectors are documented in Section 6.
+### Step 3: Room A – Extract Black-Box Specification (`SPEC.md`) & Witty Branding
+1. Devise a witty, humorous homage name for the app and decide signature colors & symbol.
+2. Utilize disassemblers/decompilers (Ghidra, Hopper, strings, AST analysis) to understand core business logic.
+3. Fill out `SPEC.md` using the template at `docs/en/SPEC_TEMPLATE.md`.
+4. Ensure all algorithmic steps are written in pseudo-code and test vectors are documented in Section 6.
 
-### Step 4: Room B – Clean-Room Native Re-implementation
+### Step 4: Room B – Clean-Room Native Re-implementation & Icon Generation
 1. Scaffold an idiomatic Swift Package or Xcode project:
    ```bash
-   mkdir -p rebuilt_app/Sources rebuilt_app/Tests
+   mkdir -p rebuilt_app/Sources rebuilt_app/Resources rebuilt_app/Tests
    ```
-2. Write `Package.swift` configured for `arm64-apple-macosx14.0+`.
-3. Implement clean, type-safe Swift 6 code complying with strict concurrency.
+2. Generate the native macOS squircle icon (`AppIcon.icns`):
+   ```bash
+   ./scripts/generate_app_icon.swift "<WittyAppName>" rebuilt_app/Resources "<SymbolEmoji>" "#Hex1" "#Hex2"
+   ```
+3. Write `Package.swift` configured for `arm64-apple-macosx14.0+`.
+4. Implement clean, type-safe Swift 6 code complying with strict concurrency.
 
 ### Step 5: Native Compilation and Ad-Hoc Signing
 Compile the native binary:

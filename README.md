@@ -116,12 +116,19 @@ rea-silicon/
 ```
 *Outputs: Mach-O slices, dynamic libraries, code signatures, and runtime stack fingerprinting.*
 
-### 2. Verify Native Apple Silicon Build
+### 2. Generate Native macOS Squircle AppIcon
+```bash
+./scripts/generate_app_icon.swift "<AppName>" ./Resources "<SymbolEmoji>" "#Hex1" "#Hex2"
+# Example: ./scripts/generate_app_icon.swift "Calcuroo" ./Resources "🧮" "#10B981" "#047857"
+```
+*Outputs: Big Sur style 1024x1024 master icon and Apple Silicon ready multi-resolution `AppIcon.icns`.*
+
+### 3. Verify Native Apple Silicon Build
 ```bash
 ./scripts/verify_build.sh ./path_to_rebuilt_swift_package
 ```
 
-### 3. Run Differential Test Oracle
+### 4. Run Differential Test Oracle
 ```bash
 python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/to/rebuilt_arm64_bin --args "-v"
 ```
@@ -132,6 +139,8 @@ python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/
 
 **REA-Silicon**은 레거시 바이너리나 Electron 등의 크로스 플랫폼 앱을 역공학하여 최신 **Apple Silicon (macOS arm64)** 환경에 최적화된 고성능 **Swift 6 / SwiftUI / AppKit 네이티브 애플리케이션**으로 재개발할 수 있도록 지원하는 오픈소스 프레임워크입니다.
 
+- **위트 있는 명칭 변경 (Witty Naming)**: 상표권 충돌을 방지하고 재미를 더하기 위해 원작 앱 명칭을 그대로 쓰지 않고, 원작의 핵심 기능을 패러디/오마주한 재치 있는 이름(예: `Calculator` -> `Calcuroo`, `Postman` -> `PacketBoy`, `Slack` -> `Taut`)을 자동으로 부여합니다.
+- **특징적인 고해상도 앱 아이콘 자동 생성**: macOS Big Sur+ 규격(Squircle 둥근 사각형, 그라디언트, 시그니처 심볼/이모지)의 `AppIcon.icns`와 1024x1024 마스터 이미지를 네이티브 Swift(`scripts/generate_app_icon.swift`)로 즉시 렌더링하여 번들에 탑재합니다.
 - **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증까지 원스톱으로 처리합니다.
 - **클린룸 원칙(Clean-Room)**: 원본 코드의 지적 재산권 침해를 막기 위해 분석(Room A)과 재개발(Room B)을 엄격히 분리합니다.
 - **Git 버전 관리**: 모든 문서, 템플릿, 규칙, 스크립트가 Git으로 완벽하게 추적됩니다.

@@ -1,16 +1,23 @@
-# Black-Box Specification: {{FEATURE_NAME_OR_APP_NAME}}
+# Black-Box Specification: {{WITTY_REBUILT_APP_NAME}}
 
 > **Specification Version:** 1.0.0  
+> **Original Target App:** `{{ORIGINAL_TARGET_APP_NAME}}` (Do NOT reuse exact trademark)  
+> **Witty Homage Name:** `{{WITTY_REBUILT_APP_NAME}}` (e.g., `Calcuroo`, `PacketBoy`, `Taut`)  
+> **Visual Identity:** Signature Symbol `{{SYMBOL_OR_EMOJI}}`, Theme Colors `{{PRIMARY_HEX}}` / `{{SECONDARY_HEX}}`  
 > **Target Rebuild Architecture:** macOS Apple Silicon Native (arm64 / Swift 6 / SwiftUI)  
 > **Clean-Room Boundary:** Room A Specification (Strictly Zero Original Proprietary Code Copy)
 
 ---
 
-## 1. System Overview & Purpose
-Briefly describe the overall responsibility, business logic, or functional purpose of the target component/application extracted during reverse engineering.
+## 1. System Overview & Witty Branding Concept
+Briefly describe the overall responsibility, business logic, and functional purpose of the target component/application extracted during reverse engineering.
 
 - **Original Binary/App:** `{{TARGET_ORIGINAL_PATH}}`
 - **Original Architecture & Stack:** `{{ORIGINAL_STACK}}` (e.g., x86_64 Mach-O, Electron/Node.js, .NET C#, C++ Qt)
+- **Witty Homage Naming Rationale:** Explanation of the witty parody/homage name chosen.
+- **App Icon Generation Metadata:**
+  - CLI Command: `./scripts/generate_app_icon.swift "{{WITTY_REBUILT_APP_NAME}}" ./Resources "{{SYMBOL_OR_EMOJI}}" "{{PRIMARY_HEX}}" "{{SECONDARY_HEX}}"`
+  - Deliverables: `AppIcon.icns`, `icon_1024.png`
 - **Target Replacement Stack:** Swift 6, SwiftUI / AppKit, native `arm64-apple-macosx`
 
 ---

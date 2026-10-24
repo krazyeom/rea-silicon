@@ -39,18 +39,23 @@ Analyze the output:
 3. Technology stack signatures (Electron ASAR, Qt, .NET, Go, Python, Swift, Objective-C).
 4. Linked dynamic libraries and frameworks (`otool -L`).
 
-### Step 3: Room A – Generate Black-Box Specification (`SPEC.md`)
-1. Dissect key entrypoints, protocols, data models, and algorithms without copying decompiled code.
-2. Fill in `SPEC.md` using [`SPEC_TEMPLATE.md`](../../docs/en/SPEC_TEMPLATE.md).
-3. Document Evidence (symbols, strings, offsets) and test vectors.
+### Step 3: Room A – Generate Black-Box Specification (`SPEC.md`) & Identity
+1. Devise a witty, humorous homage name for the app (NEVER reuse the exact original trademarked name).
+2. Establish a distinctive theme (primary & secondary hex colors, and signature symbol/emoji).
+3. Dissect key entrypoints, protocols, data models, and algorithms without copying decompiled code.
+4. Fill in `SPEC.md` using [`SPEC_TEMPLATE.md`](../../docs/en/SPEC_TEMPLATE.md).
 
-### Step 4: Room B – Rebuild for Apple Silicon Native
-1. Target: `arm64-apple-macosx14.0+` using Swift 6.
-2. Select archetype:
+### Step 4: Room B – Rebuild for Apple Silicon Native & Generate Icon
+1. Generate native macOS Big Sur+ squircle AppIcon:
+   ```bash
+   ./scripts/generate_app_icon.swift "<WittyAppName>" ./Resources "<SymbolEmoji>" "#Hex1" "#Hex2"
+   ```
+2. Target: `arm64-apple-macosx14.0+` using Swift 6.
+3. Select archetype:
    - CLI Tool: `swift-argument-parser`
-   - GUI Application: `SwiftUI` + `AppKit`
+   - GUI Application: `SwiftUI` + `AppKit` (embed `AppIcon.icns` in bundle)
    - Status Bar Utility: `MenuBarExtra`
-3. Structure code in a clean Swift Package Manager project (`Package.swift`, `Sources/`, `Tests/`).
+4. Structure code in a clean Swift Package Manager project (`Package.swift`, `Sources/`, `Tests/`).
 
 ### Step 5: Compile & Ad-Hoc Code Sign
 ```bash

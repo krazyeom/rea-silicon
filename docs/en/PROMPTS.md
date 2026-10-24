@@ -18,7 +18,10 @@ Your mission is to perform a clean-room architectural extraction of the target a
 - Original Architecture: {{ORIGINAL_FORMAT}} (e.g., x86_64 Mach-O, Electron ASAR, .NET DLL, Android APK)
 
 [Analysis Instructions]
-1. Environment & Stack Inspection:
+1. Witty Homage Naming & Visual Identity:
+   - Do NOT reuse the exact original proprietary name or trademark.
+   - Invent a witty, humorous parody/homage name evoking the app's essence (e.g., `Calcuroo`, `PacketBoy`, `Taut`), and select signature theme colors and a symbol/emoji.
+2. Environment & Stack Inspection:
    - Execute `./scripts/inspect_target.sh {{TARGET_PATH}}` to inspect architectures, linkage, and stack heuristics.
    - Trace binary entrypoints, symbol tables, and exported interfaces.
 2. Behavioral & State Modeling:
@@ -62,6 +65,7 @@ Using ONLY the black-box requirements outlined in `SPEC.md`, develop a high-perf
    - Adhere strictly to the public interfaces, data protocols, and error codes defined in `SPEC.md`.
 3. Production Deliverables:
    - Generate a valid `Package.swift` file configured for macOS v14+.
+   - Run `./scripts/generate_app_icon.swift` to build the native `AppIcon.icns` asset.
    - Provide complete, compilable Swift source files in `Sources/`.
    - Include automated unit tests in `Tests/` satisfying all test vectors listed in `SPEC.md`.
 4. Compilation & Verification:

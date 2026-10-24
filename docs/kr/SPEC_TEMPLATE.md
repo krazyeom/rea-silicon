@@ -1,16 +1,23 @@
-# 블랙박스 기능/애플리케이션 명세서: {{FEATURE_NAME_OR_APP_NAME}}
+# 블랙박스 기능/애플리케이션 명세서: {{WITTY_REBUILT_APP_NAME}}
 
 > **명세서 버전:** 1.0.0  
+> **원본 대상 명칭:** `{{ORIGINAL_TARGET_APP_NAME}}` (상표 보호를 위해 재사용 금지)  
+> **위트 있는 신규 명칭:** `{{WITTY_REBUILT_APP_NAME}}` (예: `Calcuroo`, `PacketBoy`, `Taut`)  
+> **비주얼 아이덴티티:** 시그니처 심볼 `{{SYMBOL_OR_EMOJI}}`, 테마 컬러 `{{PRIMARY_HEX}}` / `{{SECONDARY_HEX}}`  
 > **재구현 타깃 아키텍처:** macOS Apple Silicon Native (arm64 / Swift 6 / SwiftUI)  
 > **클린룸 경계:** Room A 명세서 (원본 저작권 소스코드 일체 복사 금지)
 
 ---
 
-## 1. 시스템 개요 및 목적
+## 1. 시스템 개요 및 네이밍/브랜딩 컨셉
 역공학을 통해 분석된 대상 컴포넌트 또는 애플리케이션의 핵심 책임, 비즈니스 로직, 기능적 목적을 요약합니다.
 
 - **원본 바이너리/앱 경로:** `{{TARGET_ORIGINAL_PATH}}`
 - **원본 아키텍처 및 기술 스택:** `{{ORIGINAL_STACK}}` (예: x86_64 Mach-O, Electron/Node.js, .NET C#, C++ Qt)
+- **위트 있는 명칭 변경 배경:** 원작의 성격이나 기능을 유쾌하게 연상시키는 오마주 네이밍 사유 기술.
+- **앱 아이콘 생성 정보:**
+  - 실행 명령어: `./scripts/generate_app_icon.swift "{{WITTY_REBUILT_APP_NAME}}" ./Resources "{{SYMBOL_OR_EMOJI}}" "{{PRIMARY_HEX}}" "{{SECONDARY_HEX}}"`
+  - 산출물: `AppIcon.icns`, `icon_1024.png`
 - **전환 목표 기술 스택:** Swift 6, SwiftUI / AppKit, 네이티브 `arm64-apple-macosx`
 
 ---

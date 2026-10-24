@@ -30,7 +30,9 @@ claude "Analyze and rebuild for Apple Silicon Native: /Applications/aaa.app"
    - `docs/kr/SPEC_TEMPLATE.md`
    - `docs/kr/PROMPTS.md`
 2. **Mac Silicon Native 최우선 원칙**: 사용자가 별도로 다른 플랫폼을 명시하지 않는 한, 모든 재개발 작업은 **Swift 6 / SwiftUI / AppKit 기반의 Apple Silicon (`arm64-apple-macosx`) 네이티브**를 기본 타깃으로 삼습니다.
-3. **클린룸 격리 준수**: 원본 프로그램의 비공개 디컴파일 C/C++ 코드나 어셈블리를 재개발 소스코드에 절대 직접 복사하지 않으며, 반드시 블랙박스 명세서(`SPEC.md`)를 거쳐 구현합니다.
+3. **위트 있는 명칭 변경 (Witty Homage Naming)**: 원작 앱의 이름을 그대로 사용하는 것을 엄격히 금지합니다. 상표권 보호 및 사용자 친화성을 위해 원작의 특징을 연상시키는 재치 있는 패러디/오마주 이름(예: `Calculator` -> `Calcuroo`, `Postman` -> `PacketBoy`, `Notion` -> `Epiphany`)을 채택해야 합니다.
+4. **특징적 아이콘 및 비주얼 필수 제작 (Distinctive Branding & AppIcon)**: 모든 앱 프로젝트에는 macOS Big Sur+ 스타일의 고해상도 앱 아이콘(`AppIcon.icns`, `icon_1024.png`)과 시그니처 테마 색상을 필수로 제작하여 번들에 포함해야 합니다 (`./scripts/generate_app_icon.swift` 활용).
+5. **클린룸 격리 준수**: 원본 프로그램의 비공개 디컴파일 C/C++ 코드나 어셈블리를 재개발 소스코드에 절대 직접 복사하지 않으며, 반드시 블랙박스 명세서(`SPEC.md`)를 거쳐 구현합니다.
 
 ---
 
@@ -63,18 +65,23 @@ flowchart TD
 - **CLI 도구 / 백그라운드 서비스**: Apple 공식 `swift-argument-parser` 및 `SMAppService` 기반 네이티브 데몬 패키지 설계.
 - **C++/Qt/.NET GUI 앱**: 선언형 SwiftUI 인터페이스와 `@Observable` 데이터 모델로 전환.
 
-### 3단계: Room A – 블랙박스 사양서 추출 (`SPEC.md`)
-1. REA 분석 도구(Ghidra, Hopper, strings, AST 분석기 등)를 활용하여 핵심 엔트리포인트와 비즈니스 로직을 분석합니다.
-2. `docs/kr/SPEC_TEMPLATE.md` 템플릿에 맞추어 `SPEC.md`를 작성합니다.
-3. 모든 알고리즘은 의사코드(Pseudo-code)로 작성하고, 입출력 테스트 벡터를 6번 섹션에 명시합니다.
+### 3단계: Room A – 블랙박스 사양서 추출 (`SPEC.md`) 및 위트 있는 작명
+1. 원본 상표를 대체할 **위트 있는 패러디/오마주 명칭**을 정하고, 시그니처 심볼(이모지/SF Symbols)과 테마 색상(Primary/Secondary Hex)을 선정합니다.
+2. REA 분석 도구(Ghidra, Hopper, strings, AST 분석기 등)를 활용하여 핵심 엔트리포인트와 비즈니스 로직을 분석합니다.
+3. `docs/kr/SPEC_TEMPLATE.md` 템플릿에 맞추어 `SPEC.md`를 작성합니다.
+4. 모든 알고리즘은 의사코드(Pseudo-code)로 작성하고, 입출력 테스트 벡터를 6번 섹션에 명시합니다.
 
-### 4단계: Room B – 클린룸 네이티브 신규 구현
+### 4단계: Room B – 클린룸 네이티브 신규 구현 및 앱 아이콘 제작
 1. Swift 패키지 또는 앱 프로젝트 구조를 생성합니다:
    ```bash
-   mkdir -p rebuilt_app/Sources rebuilt_app/Tests
+   mkdir -p rebuilt_app/Sources rebuilt_app/Resources rebuilt_app/Tests
    ```
-2. `arm64-apple-macosx14.0+`을 타깃으로 하는 `Package.swift`를 작성합니다.
-3. `SPEC.md`의 요구사항에 맞추어 Swift 6 엄격한 동시성을 준수하는 네이티브 코드를 작성합니다.
+2. 고유 앱 아이콘(`AppIcon.icns`)을 자동 생성합니다:
+   ```bash
+   ./scripts/generate_app_icon.swift "<위트있는앱이름>" rebuilt_app/Resources "<심볼이모지>" "#Hex1" "#Hex2"
+   ```
+3. `arm64-apple-macosx14.0+`을 타깃으로 하는 `Package.swift`를 작성합니다.
+4. `SPEC.md`의 요구사항에 맞추어 Swift 6 엄격한 동시성을 준수하는 네이티브 코드를 작성합니다.
 
 ### 5단계: Apple Silicon 네이티브 컴파일 및 Ad-hoc 코드 서명
 Apple Silicon 네이티브 머신 코드로 빌드합니다:
