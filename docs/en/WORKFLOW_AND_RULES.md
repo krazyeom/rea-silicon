@@ -4,6 +4,23 @@ This document defines the strict operational rules and automated workflow that A
 
 ---
 
+## 0. Quick One-Line LLM CLI Execution
+
+You can launch the complete end-to-end analysis and rebuild pipeline simply by providing the path to `aaa.app`:
+
+```bash
+# Option 1: One-Touch Wrapper Script (Recommended)
+./scripts/rebuild_app.sh /Applications/aaa.app
+
+# Option 2: Direct Antigravity CLI (agy)
+agy "Analyze and rebuild for Apple Silicon Native: /Applications/aaa.app"
+
+# Option 3: Claude Code CLI (claude)
+claude "Analyze and rebuild for Apple Silicon Native: /Applications/aaa.app"
+```
+
+---
+
 ## 1. Trigger Conditions & Operating Contract
 
 When the user provides an application path (e.g., `/Applications/Example.app`, `/path/to/binary`, or a local bundle), the agent **MUST** activate this protocol:

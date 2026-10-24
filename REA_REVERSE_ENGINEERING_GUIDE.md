@@ -23,19 +23,22 @@ flowchart LR
 
 ---
 
-## 1. 빠른 시작: 앱 위치만으로 분석 및 재개발 실행하기
+## 1. 빠른 시작: 앱 위치만으로 LLM CLI 분석 및 재개발 실행하기
 
-터미널이나 AI 에이전트 대화창에 분석할 애플리케이션 경로를 지정합니다:
+터미널에서 `aaa.app`의 위치만 전달하면 즉시 전체 분석 및 Swift 6 재개발이 실행됩니다:
 
 ```bash
-# 1. 타깃 기술 스택 및 바이너리 구조 자동 진단
-./scripts/inspect_target.sh /Applications/TargetApp.app
+# 1) 가장 간단한 원터치 스크립트 실행 (CLI 자동 감지)
+./scripts/rebuild_app.sh /Applications/aaa.app
+
+# 2) agy (Antigravity CLI) 대화형 실행
+agy "이 앱 분석해서 Apple Silicon 네이티브로 재개발해줘: /Applications/aaa.app"
+
+# 3) claude CLI 실행
+claude "이 앱 분석해서 Apple Silicon 네이티브 Swift로 재개발해줘: /Applications/aaa.app"
 ```
 
-에이전트에게는 다음과 같이 명령할 수 있습니다:
-> `"이 애플리케이션(/Applications/LegacyTool.app)을 분석해서 Apple Silicon Native Swift 6 CLI 도구로 재개발해줘."`
-
-에이전트는 [`AGENTS.md`](file:///Users/krazyeom/dev/rea/AGENTS.md) 규칙에 따라 `SPEC.md`를 작성하고 Swift 패키지로 즉시 구현합니다.
+실행 후 에이전트는 [`AGENTS.md`](file:///Users/krazyeom/dev/rea/AGENTS.md) 규칙에 따라 타깃 진단 -> `SPEC.md` 작성 -> Swift 패키지 재개발 -> 빌드 검증을 자율적으로 완수합니다.
 
 ---
 

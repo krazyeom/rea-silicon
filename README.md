@@ -22,20 +22,41 @@
 
 ---
 
-## ⚡ Quick Start: How to Use with Antigravity / AI Agent
+## ⚡ Quick Start: 가장 간단한 1초 실행 가이드 (LLM CLI Quickstart)
 
-Simply point the agent to the application bundle or binary path:
+`aaa.app`의 위치만 주고 터미널에서 즉시 분석 및 Apple Silicon 네이티브 재개발을 시작하는 가장 간단한 방법입니다:
 
-```text
-"Analyze and rebuild this application for Apple Silicon Native: /Applications/SampleLegacyApp.app"
+### 🚀 방법 1. 원터치 전용 스크립트 (가장 추천)
+앱 위치만 인자로 넘기면 기술 스택 진단(`inspect_target.sh`) 후 설치된 LLM CLI(`agy`, `claude` 등)를 자동 실행합니다:
+```bash
+./scripts/rebuild_app.sh /Applications/aaa.app
 ```
 
-The agent will automatically:
-1. Load operating rules from [`AGENTS.md`](file:///Users/krazyeom/dev/rea/AGENTS.md) and activation skill [`.agents/skills/rea-silicon-rebuild/SKILL.md`](file:///Users/krazyeom/dev/rea/.agents/skills/rea-silicon-rebuild/SKILL.md).
-2. Execute [`scripts/inspect_target.sh`](file:///Users/krazyeom/dev/rea/scripts/inspect_target.sh) to diagnose architecture, frameworks, and runtime stack.
-3. Formulate a clean-room `SPEC.md` (Room A) adhering to zero-copyright contamination principles.
-4. Rebuild the application natively using Swift 6 / SwiftUI targeting Apple Silicon `arm64` (Room B).
-5. Verify builds with [`scripts/verify_build.sh`](file:///Users/krazyeom/dev/rea/scripts/verify_build.sh) and validate output equivalence with [`scripts/test_oracle.py`](file:///Users/krazyeom/dev/rea/scripts/test_oracle.py).
+### 💬 방법 2. Antigravity CLI (`agy`)로 직접 실행
+터미널에서 `agy`에 앱 경로만 전달하면 워크스페이스 규칙(`AGENTS.md`)에 따라 자율 재개발을 시작합니다:
+```bash
+# 대화형 모드로 실행
+agy "이 앱 분석해서 Apple Silicon 네이티브로 재개발해줘: /Applications/aaa.app"
+
+# 논스톱 원샷 자동 실행 (자동 승인 모드)
+agy --dangerously-skip-permissions -p "이 앱 분석해서 Apple Silicon 네이티브로 재개발해줘: /Applications/aaa.app"
+```
+
+### 🤖 방법 3. Claude Code CLI (`claude`)로 직접 실행
+```bash
+claude "이 앱 분석해서 Apple Silicon 네이티브 Swift로 재개발해줘: /Applications/aaa.app"
+```
+
+---
+
+## 🧭 에이전트 자동 수행 흐름 (Behind the Scenes)
+
+명령어가 실행되면 에이전트는 사용자의 추가 개입 없이 다음 단계를 자율적으로 수행합니다:
+1. [`AGENTS.md`](file:///Users/krazyeom/dev/rea/AGENTS.md) 및 [`.agents/skills/rea-silicon-rebuild/SKILL.md`](file:///Users/krazyeom/dev/rea/.agents/skills/rea-silicon-rebuild/SKILL.md) 규칙 자동 로드.
+2. [`scripts/inspect_target.sh`](file:///Users/krazyeom/dev/rea/scripts/inspect_target.sh)를 실행하여 아키텍처 슬라이스, 링크된 프레임워크, 런타임 기술 스택(Electron, Qt, .NET, Go 등)을 자동 진단.
+3. 클린룸 원칙에 따라 [`SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea/docs/kr/SPEC_TEMPLATE.md) 기반의 블랙박스 명세서(`SPEC.md`) 추출.
+4. `SPEC.md`만을 참조하여 Swift 6 / SwiftUI 기반의 macOS Apple Silicon (`arm64`) 네이티브 프로젝트 생성.
+5. [`scripts/verify_build.sh`](file:///Users/krazyeom/dev/rea/scripts/verify_build.sh)로 컴파일 및 코드 서명 후, [`scripts/test_oracle.py`](file:///Users/krazyeom/dev/rea/scripts/test_oracle.py)로 입출력 검증 완료.
 
 ---
 

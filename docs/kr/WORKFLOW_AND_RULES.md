@@ -4,6 +4,23 @@
 
 ---
 
+## 0. 가장 빠른 LLM CLI 실행 방법 (One-Line Execution)
+
+터미널에서 `aaa.app` 위치만 지정하여 즉시 전체 파이프라인을 구동할 수 있습니다:
+
+```bash
+# 방법 1: 원터치 래퍼 스크립트 실행 (권장)
+./scripts/rebuild_app.sh /Applications/aaa.app
+
+# 방법 2: agy (Antigravity CLI) 직접 호출
+agy "이 앱 분석해서 Apple Silicon 네이티브로 재개발해줘: /Applications/aaa.app"
+
+# 방법 3: claude CLI 직접 호출
+claude "Analyze and rebuild for Apple Silicon Native: /Applications/aaa.app"
+```
+
+---
+
 ## 1. 트리거 조건 및 기본 동작 계약
 
 사용자가 애플리케이션 경로(예: `/Applications/Target.app`, `./bin/binary`, 로컬 번들 등)를 제공하면, 에이전트는 **반드시** 다음 프로토콜을 활성화해야 합니다:
