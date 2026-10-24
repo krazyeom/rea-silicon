@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build and Output
+.build/
+build/
+DerivedData/
+*.o
+*.dylib
+*.app/Contents/MacOS/*_extracted/
+dist/
+out/
+
+# Ghidra / Reverse Engineering Artifacts
+*.gpr
+*.rep/
+*.idb
+*.i64
+*.dmp
+*.decompiled/
+
+# Temporary & Log files
+*.log
+tmp/
+temp/
+scratch/
+
+# Environment files
+.env
+.env.local
