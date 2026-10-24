@@ -1,4 +1,4 @@
-# REA Re-engineered Prompt Catalog (English)
+# REA-Silicon Re-engineered Prompt Catalog (English)
 
 This document contains production-grade, meticulously engineered prompts for reverse engineering target binaries and rebuilding them natively for Apple Silicon (macOS arm64).
 

@@ -1,6 +1,6 @@
-# Agent Operating Rules: Reverse Engineering & Apple Silicon Rebuild
+# REA-Silicon Agent Operating Rules: Reverse Engineering & Apple Silicon Rebuild
 
-This workspace is configured to autonomously reverse-engineer target applications and rebuild them into high-performance **Apple Silicon Native (macOS arm64)** applications using modern **Swift 6, SwiftUI, and AppKit**.
+This workspace (`REA-Silicon`) is configured to autonomously reverse-engineer target applications and rebuild them into high-performance **Apple Silicon Native (macOS arm64)** applications using modern **Swift 6, SwiftUI, and AppKit**.
 
 ---
 

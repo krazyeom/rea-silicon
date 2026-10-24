@@ -1,6 +1,6 @@
-# REA (Reverse Engineer Anything): 역공학 및 Apple Silicon 네이티브 재개발 가이드
+# REA-Silicon: 역공학 및 Apple Silicon 네이티브 재개발 종합 가이드
 
-본 문서는 **REA (Reverse Engineer Anything)** 도구 및 MCP 서버를 활용하여 기존 바이너리, 애플리케이션, 번들 코드를 역공학하고, **고성능 모던 Apple Silicon (macOS arm64) 네이티브 애플리케이션(Swift 6 / SwiftUI)**으로 안전하게 재개발(Clean-room Rebuild)하기 위한 실전 프롬프트 템플릿과 실행 지침을 정리한 가이드입니다.
+본 문서는 **REA-Silicon** 프레임워크를 기반으로 역공학 도구 및 MCP 서버를 활용하여 기존 바이너리, 애플리케이션, 번들 코드를 분석하고, **고성능 모던 Apple Silicon (macOS arm64) 네이티브 애플리케이션(Swift 6 / SwiftUI)**으로 안전하게 재개발(Clean-room Rebuild)하기 위한 실전 프롬프트 템플릿과 실행 지침을 정리한 가이드입니다.
 
 ---
 

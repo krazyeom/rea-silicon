@@ -1,4 +1,4 @@
-# Gemini Workspace Rules: REA Apple Silicon Rebuild
+# Gemini Workspace Rules: REA-Silicon Apple Silicon Rebuild
 
 Please refer to and follow the operating rules defined in `AGENTS.md` and the detailed technical guides in `docs/en/` and `docs/kr/`.
 

@@ -1,8 +1,9 @@
-# REA (Reverse Engineer Anything) Engine & Apple Silicon Native Rebuilder
+# REA-Silicon (Reverse Engineer Anything for Apple Silicon)
 
 [![macOS](https://img.shields.io/badge/Platform-macOS%20Apple%20Silicon%20(arm64)-000000?logo=apple&style=flat-square)](https://apple.com)
 [![Swift](https://img.shields.io/badge/Language-Swift%206.0-FA7343?logo=swift&style=flat-square)](https://swift.org)
 [![License-Safe](https://img.shields.io/badge/Pattern-Clean--Room%20Rebuild-success?style=flat-square)](#)
+[![Git](https://img.shields.io/badge/Repository-rea--silicon-blue?logo=git&style=flat-square)](#)
 
 > **Autonomous Reverse Engineering & Native Rebuild System**  
 > Analyzes legacy binaries, Electron packages, and cross-platform applications, then reconstructs them into high-performance, native macOS Apple Silicon (`arm64`) applications using **Swift 6, SwiftUI, and AppKit**.
@@ -38,10 +39,25 @@ The agent will automatically:
 
 ---
 
+## 🚀 Publishing to GitHub (Git 저장소 연동 가이드)
+
+If you are publishing this project to your GitHub account as `rea-silicon`:
+
+```bash
+# 1. GitHub에서 'rea-silicon' 새 저장소를 생성한 후 원격 추가
+git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/rea-silicon.git
+
+# 2. main 브랜치 푸시
+git branch -M main
+git push -u origin main
+```
+
+---
+
 ## 📁 Repository Structure
 
 ```text
-rea/
+rea-silicon/
 ├── .agents/
 │   └── skills/
 │       └── rea-silicon-rebuild/
@@ -93,7 +109,7 @@ python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/
 
 ## 📜 한국어 개요 (Korean Overview)
 
-본 저장소는 레거시 바이너리나 Electron 등의 크로스 플랫폼 앱을 역공학하여 최신 **Apple Silicon (macOS arm64)** 환경에 최적화된 고성능 **Swift 6 / SwiftUI / AppKit 네이티브 애플리케이션**으로 재개발할 수 있도록 지원하는 프레임워크입니다.
+**REA-Silicon**은 레거시 바이너리나 Electron 등의 크로스 플랫폼 앱을 역공학하여 최신 **Apple Silicon (macOS arm64)** 환경에 최적화된 고성능 **Swift 6 / SwiftUI / AppKit 네이티브 애플리케이션**으로 재개발할 수 있도록 지원하는 오픈소스 프레임워크입니다.
 
 - **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증까지 원스톱으로 처리합니다.
 - **클린룸 원칙(Clean-Room)**: 원본 코드의 지적 재산권 침해를 막기 위해 분석(Room A)과 재개발(Room B)을 엄격히 분리합니다.

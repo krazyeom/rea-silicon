@@ -19,7 +19,7 @@ if [[ ! -e "$TARGET" ]]; then
 fi
 
 echo "================================================================================"
-echo "🎯 REA TARGET ANALYSIS REPORT"
+echo "🎯 REA-Silicon TARGET ANALYSIS REPORT"
 echo "Target: $TARGET"
 echo "Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "Host Architecture: $(uname -m) (Kernel: $(uname -s) $(uname -r))"

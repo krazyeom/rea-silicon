@@ -1,14 +1,14 @@
-# REA (Reverse Engineer Anything) 역공학 및 Apple Silicon 네이티브 재구현 가이드
+# REA-Silicon: 역공학 및 Apple Silicon 네이티브 재구현 가이드
 
 > **Bilingual Navigation:**  
 > - 🇺🇸 **English Version:** Please see [`docs/en/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/en/REA_REVERSE_ENGINEERING_GUIDE.md)  
 > - 🇰🇷 **한국어 완성본:** [`docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md)  
-> - 🍏 **Apple Silicon Rebuild Guide:** [`docs/en/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/en/MAC_SILICON_REBUILD_GUIDE.md) / [`docs/kr/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/kr/MAC_SILICON_REBUILD_GUIDE.md)  
+> - 🍏 **Apple Silicon Rebuild Guide:** [`docs/en/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/en/MAC_SILICON_REBUILD_GUIDE.md) / [`docs/kr/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/kr/MAC_SILICON_REBUILD_GUIDE.md)  
 > - 🤖 **Agent Rules & SOP:** [`docs/en/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea/docs/en/WORKFLOW_AND_RULES.md) / [`docs/kr/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea/docs/kr/WORKFLOW_AND_RULES.md)
 
 ---
 
-이 문서는 **REA (Reverse Engineer Anything)** 도구 및 MCP 서버를 활용하여 기존 바이너리, 애플리케이션, 번들 코드를 역공학하고 최신 **Apple Silicon (macOS arm64) 네이티브 기술 스택(Swift 6, SwiftUI, AppKit)**으로 안전하게 재구현(Clean-room Rebuild)하기 위한 실전 가이드입니다.
+**REA-Silicon**은 **REA (Reverse Engineer Anything)** 분석 도구 및 MCP 서버를 활용하여 기존 바이너리, 애플리케이션, 번들 코드를 역공학하고 최신 **Apple Silicon (macOS arm64) 네이티브 기술 스택(Swift 6, SwiftUI, AppKit)**으로 안전하게 재구현(Clean-room Rebuild)하기 위한 실전 가이드입니다.
 
 ---
 
@@ -16,7 +16,7 @@
 
 ```mermaid
 flowchart LR
-    Target[타깃 바이너리 / 앱] -->|Phase 1: REA & inspect_target.sh| RoomA["Room A: 분석 및 명세화\n(Evidence & SPEC.md)"]
+    Target[타깃 바이너리 / 앱] -->|Phase 1: REA-Silicon & inspect_target.sh| RoomA["Room A: 분석 및 명세화\n(Evidence & SPEC.md)"]
     RoomA -->|순수 블랙박스 규격 전달| RoomB["Room B: 클린룸 재구현\n(Apple Silicon Swift 6 / SwiftUI)"]
     RoomB -->|Phase 3: 입출력 일치 검증| Oracle["테스트 하네스 및 검증\n(test_oracle.py)"]
 ```
@@ -43,7 +43,7 @@ flowchart LR
 
 ### Room A: Analysis & Black-Box Specification Extraction (`SPEC.md`)
 ```markdown
-You are a Principal Reverse Engineering Analyst (Room A Operator).
+You are a Principal Reverse Engineering Analyst (Room A Operator for REA-Silicon).
 Analyze the internal logic and operation of the specified target using REA tools and macOS utilities. Produce a comprehensive, clean-room black-box specification document (`SPEC.md`).
 
 [Target Information]
@@ -63,7 +63,7 @@ Format the output strictly according to `docs/en/SPEC_TEMPLATE.md`.
 
 ### Room B: Apple Silicon Native Rebuild (Swift 6 / SwiftUI)
 ```markdown
-You are a Senior macOS Systems Engineer (Room B Clean-Room Implementer).
+You are a Senior macOS Systems Engineer (Room B Clean-Room Implementer for REA-Silicon).
 Using ONLY the requirements documented in `SPEC.md`, develop a clean-room native macOS implementation optimized for Apple Silicon (arm64).
 
 [Implementation Context]
@@ -82,7 +82,7 @@ Using ONLY the requirements documented in `SPEC.md`, develop a clean-room native
 
 ### Phase 3: Verification & Test Oracle
 ```markdown
-You are a Verification and Quality Assurance Engineer (Test Oracle Specialist).
+You are a Verification and Quality Assurance Engineer (Test Oracle Specialist for REA-Silicon).
 Construct an automated differential test harness and test oracle suite to verify that the newly rebuilt Apple Silicon Swift binary matches the original target's specification.
 
 [Verification Requirements]

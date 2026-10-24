@@ -1,6 +1,6 @@
-# REA (Reverse Engineer Anything): Reverse Engineering & Apple Silicon Native Rebuild Guide
+# REA-Silicon (Reverse Engineer Anything for Apple Silicon): Comprehensive Guide
 
-This guide establishes the comprehensive framework for leveraging **REA (Reverse Engineer Anything)** tools and MCP servers to reverse-engineer binaries, applications, and bundles, safely rebuilding them into **high-performance, modern Apple Silicon (macOS arm64) native applications** using clean-room methodologies.
+This guide establishes the comprehensive framework for **REA-Silicon**, leveraging reverse-engineering tools and MCP servers to deconstruct legacy binaries and safely rebuild them into **high-performance, modern Apple Silicon (macOS arm64) native applications** using clean-room methodologies.
 
 ---
 

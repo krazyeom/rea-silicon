@@ -26,7 +26,7 @@ def run_command(binary_path: str, args: list, input_data: str = None) -> tuple:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="REA Test Oracle: Differential Binary Comparison")
+    parser = argparse.ArgumentParser(description="REA-Silicon Test Oracle: Differential Binary Comparison")
     parser.add_argument("--original", "-o", required=True, help="Path to original binary")
     parser.add_argument("--rebuilt", "-r", required=True, help="Path to rebuilt native binary")
     parser.add_argument("--args", "-a", nargs="*", default=[], help="Command-line arguments to pass")
@@ -35,7 +35,7 @@ def main():
     opts = parser.parse_args()
 
     print("=" * 80)
-    print("🔬 REA DIFFERENTIAL TEST ORACLE")
+    print("🔬 REA-Silicon DIFFERENTIAL TEST ORACLE")
     print(f"Original : {opts.original}")
     print(f"Rebuilt  : {opts.rebuilt}")
     print(f"Arguments: {opts.args}")
