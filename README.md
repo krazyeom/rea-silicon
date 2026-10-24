@@ -44,8 +44,8 @@ The agent will automatically:
 If you are publishing this project to your GitHub account as `rea-silicon`:
 
 ```bash
-# 1. GitHub에서 'rea-silicon' 새 저장소를 생성한 후 원격 추가
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/rea-silicon.git
+# 1. GitHub 원격 저장소 연결 (등록 완료됨)
+git remote add origin https://github.com/krazyeom/rea-silicon.git
 
 # 2. main 브랜치 푸시
 git branch -M main
