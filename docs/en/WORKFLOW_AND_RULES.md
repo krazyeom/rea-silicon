@@ -100,6 +100,15 @@ Execute the verification script or differential test runner:
 ```
 Confirm input/output equivalence against the test vectors recorded in `SPEC.md`.
 
+### Step 7: Packaging into Drag-and-Drop DMG (/Applications Installation)
+Package the application into a distribution `.dmg` featuring an `/Applications` drag-and-drop link:
+```bash
+./scripts/create_dmg.sh rebuilt_app
+# Or for a standalone .app:
+./scripts/create_dmg.sh dist/Calcuroo.app dist/Calcuroo-1.0.0-arm64.dmg
+```
+The script automates bundle packaging, `Info.plist` generation, `AppIcon.icns` inclusion, Apple Silicon ad-hoc signing, `/Applications` symlink creation, and UDZO compression.
+
 ---
 
 ## 3. Mandatory Quality & Safety Gates
@@ -107,3 +116,4 @@ Confirm input/output equivalence against the test vectors recorded in `SPEC.md`.
 1. **No Proprietary Code Leak**: Verification that zero disassembled C/C++ or machine code appears in source files.
 2. **Native Apple Silicon Verification**: Ensure `file <binary>` reports `Mach-O 64-bit executable arm64`.
 3. **Strict Concurrency Compliance**: Ensure zero data race warnings under Swift 6 compiler flags.
+4. **Distribution Readiness**: Confirm that the generated `.dmg` verifies cleanly via `hdiutil verify` and allows seamless drag-and-drop installation into `/Applications`.

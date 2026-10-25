@@ -14,11 +14,11 @@
 
 | Documentation | English (EN) | 한국어 (KR) |
 | :--- | :--- | :--- |
-| **Complete Reverse Engineering Guide** | [`docs/en/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/en/REA_REVERSE_ENGINEERING_GUIDE.md) | [`docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md) |
-| **Apple Silicon Rebuild Blueprint** | [`docs/en/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/en/MAC_SILICON_REBUILD_GUIDE.md) | [`docs/kr/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea/docs/kr/MAC_SILICON_REBUILD_GUIDE.md) |
-| **Agent Rules & SOP Workflow** | [`docs/en/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea/docs/en/WORKFLOW_AND_RULES.md) | [`docs/kr/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea/docs/kr/WORKFLOW_AND_RULES.md) |
-| **Clean-Room SPEC Template** | [`docs/en/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea/docs/en/SPEC_TEMPLATE.md) | [`docs/kr/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea/docs/kr/SPEC_TEMPLATE.md) |
-| **Engineered Prompts Catalog** | [`docs/en/PROMPTS.md`](file:///Users/krazyeom/dev/rea/docs/en/PROMPTS.md) | [`docs/kr/PROMPTS.md`](file:///Users/krazyeom/dev/rea/docs/kr/PROMPTS.md) |
+| **Complete Reverse Engineering Guide** | [`docs/en/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/REA_REVERSE_ENGINEERING_GUIDE.md) | [`docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md) |
+| **Apple Silicon Rebuild Blueprint** | [`docs/en/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/MAC_SILICON_REBUILD_GUIDE.md) | [`docs/kr/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/MAC_SILICON_REBUILD_GUIDE.md) |
+| **Agent Rules & SOP Workflow** | [`docs/en/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/WORKFLOW_AND_RULES.md) | [`docs/kr/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/WORKFLOW_AND_RULES.md) |
+| **Clean-Room SPEC Template** | [`docs/en/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/SPEC_TEMPLATE.md) | [`docs/kr/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/SPEC_TEMPLATE.md) |
+| **Engineered Prompts Catalog** | [`docs/en/PROMPTS.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/PROMPTS.md) | [`docs/kr/PROMPTS.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/PROMPTS.md) |
 
 ---
 
@@ -52,11 +52,12 @@ claude "이 앱 분석해서 Apple Silicon 네이티브 Swift로 재개발해줘
 ## 🧭 에이전트 자동 수행 흐름 (Behind the Scenes)
 
 명령어가 실행되면 에이전트는 사용자의 추가 개입 없이 다음 단계를 자율적으로 수행합니다:
-1. [`AGENTS.md`](file:///Users/krazyeom/dev/rea/AGENTS.md) 및 [`.agents/skills/rea-silicon-rebuild/SKILL.md`](file:///Users/krazyeom/dev/rea/.agents/skills/rea-silicon-rebuild/SKILL.md) 규칙 자동 로드.
-2. [`scripts/inspect_target.sh`](file:///Users/krazyeom/dev/rea/scripts/inspect_target.sh)를 실행하여 아키텍처 슬라이스, 링크된 프레임워크, 런타임 기술 스택(Electron, Qt, .NET, Go 등)을 자동 진단.
-3. 클린룸 원칙에 따라 [`SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea/docs/kr/SPEC_TEMPLATE.md) 기반의 블랙박스 명세서(`SPEC.md`) 추출.
+1. [`AGENTS.md`](file:///Users/krazyeom/dev/rea-silicon/AGENTS.md) 및 [`.agents/skills/rea-silicon-rebuild/SKILL.md`](file:///Users/krazyeom/dev/rea-silicon/.agents/skills/rea-silicon-rebuild/SKILL.md) 규칙 자동 로드.
+2. [`scripts/inspect_target.sh`](file:///Users/krazyeom/dev/rea-silicon/scripts/inspect_target.sh)를 실행하여 아키텍처 슬라이스, 링크된 프레임워크, 런타임 기술 스택(Electron, Qt, .NET, Go 등)을 자동 진단.
+3. 클린룸 원칙에 따라 [`SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/SPEC_TEMPLATE.md) 기반의 블랙박스 명세서(`SPEC.md`) 추출.
 4. `SPEC.md`만을 참조하여 Swift 6 / SwiftUI 기반의 macOS Apple Silicon (`arm64`) 네이티브 프로젝트 생성.
-5. [`scripts/verify_build.sh`](file:///Users/krazyeom/dev/rea/scripts/verify_build.sh)로 컴파일 및 코드 서명 후, [`scripts/test_oracle.py`](file:///Users/krazyeom/dev/rea/scripts/test_oracle.py)로 입출력 검증 완료.
+5. [`scripts/verify_build.sh`](file:///Users/krazyeom/dev/rea-silicon/scripts/verify_build.sh)로 컴파일 및 코드 서명 후, [`scripts/test_oracle.py`](file:///Users/krazyeom/dev/rea-silicon/scripts/test_oracle.py)로 입출력 검증 완료.
+6. [`scripts/create_dmg.sh`](file:///Users/krazyeom/dev/rea-silicon/scripts/create_dmg.sh)로 `/Applications` 드래그 앤 드롭 설치가 가능한 최종 `.dmg` 배포 패키지 자동 생성.
 
 ---
 
@@ -98,9 +99,12 @@ rea-silicon/
 │       ├── SPEC_TEMPLATE.md
 │       └── PROMPTS.md
 ├── scripts/
+│   ├── rebuild_app.sh                   # One-touch analyzer & rebuilder launcher
 │   ├── inspect_target.sh                # Target binary & bundle inspector
+│   ├── generate_app_icon.swift          # Native Big Sur+ squircle icon generator
 │   ├── verify_build.sh                  # Apple Silicon build verifier
-│   └── test_oracle.py                   # Automated differential test oracle
+│   ├── test_oracle.py                   # Automated differential test oracle
+│   └── create_dmg.sh                    # Drag-and-drop DMG package builder
 ├── AGENTS.md                            # Global Workspace Rules for Agents
 ├── GEMINI.md                            # Compatibility Rules
 └── README.md                            # Repository Overview & Quick Start
@@ -110,28 +114,47 @@ rea-silicon/
 
 ## 🛠️ CLI Utilities Reference
 
-### 1. Inspect Target App or Binary
+### 1. One-Touch Rebuilder Launcher
+```bash
+./scripts/rebuild_app.sh /path/to/any_app.app
+```
+*Outputs: Automated pre-flight inspection and hands off to your LLM coding agent for autonomous reconstruction.*
+
+### 2. Inspect Target App or Binary
 ```bash
 ./scripts/inspect_target.sh /path/to/any_app.app
 ```
 *Outputs: Mach-O slices, dynamic libraries, code signatures, and runtime stack fingerprinting.*
 
-### 2. Generate Native macOS Squircle AppIcon
+### 3. Generate Native macOS Squircle AppIcon
 ```bash
 ./scripts/generate_app_icon.swift "<AppName>" ./Resources "<SymbolEmoji>" "#Hex1" "#Hex2"
 # Example: ./scripts/generate_app_icon.swift "Calcuroo" ./Resources "🧮" "#10B981" "#047857"
 ```
 *Outputs: Big Sur style 1024x1024 master icon and Apple Silicon ready multi-resolution `AppIcon.icns`.*
 
-### 3. Verify Native Apple Silicon Build
+### 4. Verify Native Apple Silicon Build
 ```bash
 ./scripts/verify_build.sh ./path_to_rebuilt_swift_package
+
+# Or verify build and immediately create installer DMG:
+./scripts/verify_build.sh ./path_to_rebuilt_swift_package --dmg
 ```
 
-### 4. Run Differential Test Oracle
+### 5. Run Differential Test Oracle
 ```bash
 python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/to/rebuilt_arm64_bin --args "-v"
 ```
+
+### 6. Create Drag-and-Drop `.dmg` Installer
+```bash
+# From an app bundle:
+./scripts/create_dmg.sh ./build/Calcuroo.app
+
+# Directly from a Swift Package directory:
+./scripts/create_dmg.sh ./projects/Calcuroo ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+```
+*Outputs: Compressed UDZO `.dmg` installer containing `/Applications` symlink for effortless drag-and-drop macOS installation.*
 
 ---
 
@@ -141,6 +164,7 @@ python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/
 
 - **위트 있는 명칭 변경 (Witty Naming)**: 상표권 충돌을 방지하고 재미를 더하기 위해 원작 앱 명칭을 그대로 쓰지 않고, 원작의 핵심 기능을 패러디/오마주한 재치 있는 이름(예: `Calculator` -> `Calcuroo`, `Postman` -> `PacketBoy`, `Slack` -> `Taut`)을 자동으로 부여합니다.
 - **특징적인 고해상도 앱 아이콘 자동 생성**: macOS Big Sur+ 규격(Squircle 둥근 사각형, 그라디언트, 시그니처 심볼/이모지)의 `AppIcon.icns`와 1024x1024 마스터 이미지를 네이티브 Swift(`scripts/generate_app_icon.swift`)로 즉시 렌더링하여 번들에 탑재합니다.
-- **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증까지 원스톱으로 처리합니다.
+- **드래그 앤 드롭 DMG 인스톨러 생성**: 재개발 완료 후 최종 결과물을 사용자가 `/Applications` 폴더로 바로 끌어다 놓아 설치할 수 있도록 `/Applications` 심볼릭 링크와 볼륨 아이콘이 탑재된 고압축 `.dmg`(`scripts/create_dmg.sh`)를 원클릭으로 패키징합니다.
+- **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증, DMG 패키징까지 원스톱으로 처리합니다.
 - **클린룸 원칙(Clean-Room)**: 원본 코드의 지적 재산권 침해를 막기 위해 분석(Room A)과 재개발(Room B)을 엄격히 분리합니다.
 - **Git 버전 관리**: 모든 문서, 템플릿, 규칙, 스크립트가 Git으로 완벽하게 추적됩니다.

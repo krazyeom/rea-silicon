@@ -59,6 +59,13 @@ Before executing, the agent MUST consult the workspace documentation:
      python3 ./scripts/test_oracle.py --original "<ORIGINAL_BIN>" --rebuilt "<REBUILT_BIN>"
      ```
 
+5. **Phase 4: Packaging & Drag-and-Drop DMG Creation**:
+   - Package the rebuilt app into a distributable, compressed `.dmg` containing an `/Applications` drag-and-drop symlink:
+     ```bash
+     ./scripts/create_dmg.sh <PROJECT_OR_APP_PATH> [OUTPUT_DMG]
+     ```
+   - Automatically bundles `.app` structure, ad-hoc codesigns for Apple Silicon, embeds `AppIcon.icns`, sets volume icon, and tests mountability.
+
 ---
 
 ## 📜 한국어 요약 안내 (Korean Summary)
@@ -71,3 +78,4 @@ Before executing, the agent MUST consult the workspace documentation:
 5. **클린룸 원칙(Clean-Room)**: 원작 코드를 일체 복제하지 않고 `docs/kr/SPEC_TEMPLATE.md` 양식의 블랙박스 명세서(`SPEC.md`)를 작성합니다.
 6. 명세서에 기반하여 최신 Apple Silicon(`arm64`) 네이티브 환경(Swift 6, SwiftUI, AppKit)으로 새 프로젝트를 구현합니다.
 7. `verify_build.sh` 및 `test_oracle.py`로 빌드 및 입출력 동치성을 검증합니다.
+8. **배포용 DMG 인스톨러 생성**: `./scripts/create_dmg.sh`를 실행하여 사용자가 `/Applications` 폴더로 손쉽게 드래그 앤 드롭 설치할 수 있는 압축 `.dmg` 패키지를 최종 제작합니다.

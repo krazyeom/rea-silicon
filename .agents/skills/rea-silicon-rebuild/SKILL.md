@@ -69,3 +69,10 @@ Run test oracle to ensure input/output equivalence:
 ./scripts/verify_build.sh <PROJECT_DIR>
 python3 ./scripts/test_oracle.py --original "<TARGET_PATH>" --rebuilt "<REBUILT_PATH>" --args <SAMPLE_ARGS>
 ```
+
+### Step 7: Package into Drag-and-Drop `.dmg` Installer
+Package the rebuilt app or Swift project into a compressed `.dmg` installer equipped with an `/Applications` symlink for seamless installation:
+```bash
+./scripts/create_dmg.sh <PROJECT_OR_APP_PATH> [OUTPUT_DMG]
+# Example: ./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-arm64.dmg
+```

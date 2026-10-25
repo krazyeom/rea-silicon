@@ -100,6 +100,15 @@ codesign --force --deep --sign - .build/arm64-apple-macosx/release/<바이너리
 ```
 `SPEC.md`에 정의된 모든 테스트 케이스 벡터에 대해 원본과 재개발 결과물의 입출력 동치성을 확인합니다.
 
+### 7단계: 배포용 Drag-and-Drop DMG 생성 (/Applications 설치 간편화)
+macOS 사용자가 앱을 손쉽게 `/Applications` 폴더로 드래그하여 설치할 수 있도록 `.dmg` 인스톨러를 제작합니다:
+```bash
+./scripts/create_dmg.sh rebuilt_app
+# 또는 빌드된 .app 지정:
+./scripts/create_dmg.sh dist/Calcuroo.app dist/Calcuroo-1.0.0-arm64.dmg
+```
+스크립트는 자동으로 `.app` 번들 구성, `Info.plist` 및 `AppIcon.icns` 탑재, Ad-hoc 코드 서명, `/Applications` 심볼릭 링크 생성, UDZO 압축 이미지 검증을 완료합니다.
+
 ---
 
 ## 3. 필수 품질 및 안전 보증 규칙
@@ -107,3 +116,4 @@ codesign --force --deep --sign - .build/arm64-apple-macosx/release/<바이너리
 1. **저작권 원본 코드 오염 방지**: 디컴파일된 C/C++ 소스코드 조각이나 역어셈블리 목록이 최종 재개발 소스코드에 일체 포함되지 않았는지 확인.
 2. **Apple Silicon 네이티브 바이너리 확인**: `file <바이너리>` 실행 결과 `Mach-O 64-bit executable arm64`가 정상 표시되는지 검증.
 3. **Swift 6 동시성 안전성**: 데이터 레이스(Data Race) 컴파일러 경고가 전혀 발생하지 않는지 확인.
+4. **배포 완성도**: macOS 사용자를 위한 `/Applications` 드래그 앤 드롭 링크가 포함된 `.dmg` 파일이 정상 마운트되고 검증(`hdiutil verify`)되는지 확인.

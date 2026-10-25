@@ -53,7 +53,8 @@ AGENTS.md 및 docs/kr/MAC_SILICON_REBUILD_GUIDE.md 규칙을 읽고 다음 과�
 2. [사양 및 분석]: 타깃 기술 스택을 분석하고 docs/kr/SPEC_TEMPLATE.md 양식에 맞추어 SPEC.md 명세서를 작성하세요.
 3. [아이콘 및 비주얼 생성]: ./scripts/generate_app_icon.swift 도구를 사용하여 macOS 네이티브 AppIcon.icns 및 고해상도 에셋을 생성하세요.
 4. [클린룸 Swift 6 재개발]: Swift 6 / SwiftUI 기반의 macOS Apple Silicon (arm64) 네이티브 프로젝트로 완성도 높게 구현하세요.
-5. [검증]: ./scripts/verify_build.sh로 컴파일과 테스트를 검증하세요."
+5. [검증]: ./scripts/verify_build.sh로 컴파일과 테스트를 검증하세요.
+6. [배포용 DMG 생성]: ./scripts/create_dmg.sh를 실행하여 사용자가 /Applications 로 손쉽게 드래그 앤 드롭 설치할 수 있는 .dmg 인스톨러를 최종 제작하세요."
 
 echo ""
 echo "[Step 2] LLM CLI 연동 및 자율 재개발 시작"

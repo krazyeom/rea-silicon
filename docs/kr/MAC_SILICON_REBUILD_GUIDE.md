@@ -141,4 +141,32 @@ codesign --force --deep --sign - ./build/my_tool_arm64
 내장 검증 스크립트를 실행합니다:
 ```bash
 ./scripts/verify_build.sh <프로젝트_디렉토리>
+
+# 빌드 검증과 동시에 배포용 DMG까지 한 번에 생성:
+./scripts/verify_build.sh <프로젝트_디렉토리> --dmg
 ```
+
+---
+
+## 6. 배포용 Drag-and-Drop DMG 생성 (/Applications 간편 설치)
+
+최종 빌드된 macOS 애플리케이션 번들(`.app`)을 일반 사용자가 마우스 드래그 한 번으로 `/Applications` 폴더로 복사하여 설치할 수 있도록 표준 Apple UDZO 압축 `.dmg` 디스크 이미지를 제작합니다.
+
+### 6.1 DMG 자동 생성 스크립트 실행
+```bash
+# 1. 빌드된 .app 번들로부터 생성
+./scripts/create_dmg.sh ./build/Calcuroo.app
+
+# 2. Swift 프로젝트 경로를 직접 전달 (자동 빌드 + 번들링 + DMG 생성)
+./scripts/create_dmg.sh ./projects/Calcuroo
+
+# 3. 출력 경로 및 아이콘 지정
+./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+```
+
+### 6.2 DMG 패키징 내부 동작
+1. **.app 번들 구조화**: `Contents/MacOS`, `Contents/Resources`, `Info.plist`, `PkgInfo` 자동 구성.
+2. **Apple Silicon Ad-hoc 서명**: Gatekeeper 및 macOS 커널 무결성 통과를 위한 `codesign` 적용.
+3. **`/Applications` 심볼릭 링크 탑재**: 사용자가 디스크 이미지를 열었을 때 앱 아이콘을 Applications 폴더 아이콘으로 바로 끌어다 놓을 수 있는 바로가기 탑재.
+4. **볼륨 아이콘 적용**: `AppIcon.icns`가 제공되면 마운트된 디스크 이미지 볼륨 자체의 아이콘으로 커스텀 지정.
+5. **UDZO 압축 & 무결성 검증**: `hdiutil`을 통해 고압축 읽기 전용 이미지 생성 후 체크섬 무결성 검증.

@@ -141,4 +141,32 @@ codesign --force --deep --sign - ./build/my_tool_arm64
 Run the verification script:
 ```bash
 ./scripts/verify_build.sh <directory_with_package_or_source>
+
+# Verify and generate installer DMG in one step:
+./scripts/verify_build.sh <directory_with_package_or_source> --dmg
 ```
+
+---
+
+## 6. Drag-and-Drop DMG Installer Creation (Easy /Applications Install)
+
+Package the completed macOS app bundle (`.app`) into a polished, compressed `.dmg` disk image equipped with an `/Applications` drag-and-drop symlink.
+
+### 6.1 Creating the DMG
+```bash
+# 1. From an existing .app bundle:
+./scripts/create_dmg.sh ./build/Calcuroo.app
+
+# 2. Directly from a Swift Package directory:
+./scripts/create_dmg.sh ./projects/Calcuroo
+
+# 3. Custom output and icon:
+./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+```
+
+### 6.2 Packaging Pipeline Details
+1. **App Bundle Structuring**: Assembles `Contents/MacOS`, `Contents/Resources`, `Info.plist`, and `PkgInfo`.
+2. **Apple Silicon Ad-hoc Signing**: Signs the bundle using `codesign` to pass macOS kernel integrity checks.
+3. **`/Applications` Drag Link**: Symlinks `/Applications` inside the DMG root for native drag-and-drop installation.
+4. **Volume Custom Icon**: Applies `AppIcon.icns` as the mounted DMG volume icon when present.
+5. **UDZO Compression & Verification**: Employs `hdiutil` for compressed read-only packaging and verifies checksum.
