@@ -148,25 +148,30 @@ Run the verification script:
 
 ---
 
-## 6. Drag-and-Drop DMG Installer Creation (Easy /Applications Install)
+## 6. Project-Themed Drag-and-Drop DMG Installer Creation
 
-Package the completed macOS app bundle (`.app`) into a polished, compressed `.dmg` disk image equipped with an `/Applications` drag-and-drop symlink.
+Package the completed macOS app bundle (`.app`) into a polished, compressed `.dmg` disk image equipped with the project's custom volume icon, tailored Retina background art, and an `/Applications` drag-and-drop symlink.
+
+> [!TIP]
+> For complete domain branding palettes and visual guidelines, see [`docs/en/PROJECT_DMG_BRANDING_GUIDE.md`](./PROJECT_DMG_BRANDING_GUIDE.md).
 
 ### 6.1 Creating the DMG
 ```bash
 # 1. From an existing .app bundle:
 ./scripts/create_dmg.sh ./build/Calcuroo.app
 
-# 2. Directly from a Swift Package directory:
-./scripts/create_dmg.sh ./projects/Calcuroo
-
-# 3. Custom output and icon:
-./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+# 2. Directly with project theme colors and subtitle:
+./scripts/create_dmg.sh ./projects/Calcuroo ./dist/Calcuroo-1.0.0-arm64.dmg \
+  --icon ./Resources/AppIcon.icns \
+  --color1 "#10B981" \
+  --color2 "#047857" \
+  --subtitle "High-Precision Apple Silicon Calculator"
 ```
 
 ### 6.2 Packaging Pipeline Details
 1. **App Bundle Structuring**: Assembles `Contents/MacOS`, `Contents/Resources`, `Info.plist`, and `PkgInfo`.
 2. **Apple Silicon Ad-hoc Signing**: Signs the bundle using `codesign` to pass macOS kernel integrity checks.
 3. **`/Applications` Drag Link**: Symlinks `/Applications` inside the DMG root for native drag-and-drop installation.
-4. **Volume Custom Icon**: Applies `AppIcon.icns` as the mounted DMG volume icon when present.
-5. **UDZO Compression & Verification**: Employs `hdiutil` for compressed read-only packaging and verifies checksum.
+4. **Volume Custom Icon**: Applies `AppIcon.icns` as the mounted DMG volume icon (`.VolumeIcon.icns`).
+5. **Retina Themed Background**: Automatically renders and embeds a 1280x800 (@2x) branded backdrop matching the project's colors via `generate_dmg_background.swift`.
+6. **UDZO Compression & Verification**: Employs `hdiutil` for compressed read-only packaging and verifies checksum integrity.

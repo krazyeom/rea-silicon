@@ -16,6 +16,7 @@
 | :--- | :--- | :--- |
 | **Complete Reverse Engineering Guide** | [`docs/en/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/REA_REVERSE_ENGINEERING_GUIDE.md) | [`docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/REA_REVERSE_ENGINEERING_GUIDE.md) |
 | **Apple Silicon Rebuild Blueprint** | [`docs/en/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/MAC_SILICON_REBUILD_GUIDE.md) | [`docs/kr/MAC_SILICON_REBUILD_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/MAC_SILICON_REBUILD_GUIDE.md) |
+| **Project-Specific DMG & Branding** | [`docs/en/PROJECT_DMG_BRANDING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/PROJECT_DMG_BRANDING_GUIDE.md) | [`docs/kr/PROJECT_DMG_BRANDING_GUIDE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/PROJECT_DMG_BRANDING_GUIDE.md) |
 | **Agent Rules & SOP Workflow** | [`docs/en/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/WORKFLOW_AND_RULES.md) | [`docs/kr/WORKFLOW_AND_RULES.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/WORKFLOW_AND_RULES.md) |
 | **Clean-Room SPEC Template** | [`docs/en/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/SPEC_TEMPLATE.md) | [`docs/kr/SPEC_TEMPLATE.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/SPEC_TEMPLATE.md) |
 | **Engineered Prompts Catalog** | [`docs/en/PROMPTS.md`](file:///Users/krazyeom/dev/rea-silicon/docs/en/PROMPTS.md) | [`docs/kr/PROMPTS.md`](file:///Users/krazyeom/dev/rea-silicon/docs/kr/PROMPTS.md) |
@@ -89,12 +90,14 @@ rea-silicon/
 │   ├── en/                              # English Documentation
 │   │   ├── REA_REVERSE_ENGINEERING_GUIDE.md
 │   │   ├── MAC_SILICON_REBUILD_GUIDE.md
+│   │   ├── PROJECT_DMG_BRANDING_GUIDE.md
 │   │   ├── WORKFLOW_AND_RULES.md
 │   │   ├── SPEC_TEMPLATE.md
 │   │   └── PROMPTS.md
 │   └── kr/                              # Korean Documentation (한국어 문서)
 │       ├── REA_REVERSE_ENGINEERING_GUIDE.md
 │       ├── MAC_SILICON_REBUILD_GUIDE.md
+│       ├── PROJECT_DMG_BRANDING_GUIDE.md
 │       ├── WORKFLOW_AND_RULES.md
 │       ├── SPEC_TEMPLATE.md
 │       └── PROMPTS.md
@@ -102,9 +105,10 @@ rea-silicon/
 │   ├── rebuild_app.sh                   # One-touch analyzer & rebuilder launcher
 │   ├── inspect_target.sh                # Target binary & bundle inspector
 │   ├── generate_app_icon.swift          # Native Big Sur+ squircle icon generator
+│   ├── generate_dmg_background.swift    # Project-themed Retina DMG background generator
 │   ├── verify_build.sh                  # Apple Silicon build verifier
 │   ├── test_oracle.py                   # Automated differential test oracle
-│   └── create_dmg.sh                    # Drag-and-drop DMG package builder
+│   └── create_dmg.sh                    # Project-themed drag-and-drop DMG packager
 ├── AGENTS.md                            # Global Workspace Rules for Agents
 ├── GEMINI.md                            # Compatibility Rules
 └── README.md                            # Repository Overview & Quick Start
@@ -133,7 +137,14 @@ rea-silicon/
 ```
 *Outputs: Big Sur style 1024x1024 master icon and Apple Silicon ready multi-resolution `AppIcon.icns`.*
 
-### 4. Verify Native Apple Silicon Build
+### 4. Generate Project-Themed Retina DMG Background
+```bash
+./scripts/generate_dmg_background.swift "<AppName>" ./dist "<Tagline>" "#Hex1" "#Hex2"
+# Example: ./scripts/generate_dmg_background.swift "Calcuroo" ./dist "Native Calculator" "#10B981" "#047857"
+```
+*Outputs: High-DPI 1280x800 (@2x Retina) DMG background graphic tailored to the project's brand colors and layout.*
+
+### 5. Verify Native Apple Silicon Build
 ```bash
 ./scripts/verify_build.sh ./path_to_rebuilt_swift_package
 
@@ -141,20 +152,23 @@ rea-silicon/
 ./scripts/verify_build.sh ./path_to_rebuilt_swift_package --dmg
 ```
 
-### 5. Run Differential Test Oracle
+### 6. Run Differential Test Oracle
 ```bash
 python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/to/rebuilt_arm64_bin --args "-v"
 ```
 
-### 6. Create Drag-and-Drop `.dmg` Installer
+### 7. Create Project-Themed Drag-and-Drop `.dmg` Installer
 ```bash
-# From an app bundle:
-./scripts/create_dmg.sh ./build/Calcuroo.app
+# From an app bundle with custom theme colors, subtitle, and volume icon:
+./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-1.0.0-arm64.dmg \
+  --icon ./Resources/AppIcon.icns \
+  --color1 "#10B981" --color2 "#047857" \
+  --subtitle "High-Precision Apple Silicon Calculator"
 
 # Directly from a Swift Package directory:
-./scripts/create_dmg.sh ./projects/Calcuroo ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+./scripts/create_dmg.sh ./projects/Calcuroo --color1 "#F59E0B" --color2 "#D97706"
 ```
-*Outputs: Compressed UDZO `.dmg` installer containing `/Applications` symlink for effortless drag-and-drop macOS installation.*
+*Outputs: Compressed UDZO `.dmg` installer containing custom `.VolumeIcon.icns`, Retina background art, and `/Applications` symlink for effortless drag-and-drop macOS installation.*
 
 ---
 
@@ -164,7 +178,7 @@ python3 ./scripts/test_oracle.py --original /path/to/legacy_bin --rebuilt /path/
 
 - **위트 있는 명칭 변경 (Witty Naming)**: 상표권 충돌을 방지하고 재미를 더하기 위해 원작 앱 명칭을 그대로 쓰지 않고, 원작의 핵심 기능을 패러디/오마주한 재치 있는 이름(예: `Calculator` -> `Calcuroo`, `Postman` -> `PacketBoy`, `Slack` -> `Taut`)을 자동으로 부여합니다.
 - **특징적인 고해상도 앱 아이콘 자동 생성**: macOS Big Sur+ 규격(Squircle 둥근 사각형, 그라디언트, 시그니처 심볼/이모지)의 `AppIcon.icns`와 1024x1024 마스터 이미지를 네이티브 Swift(`scripts/generate_app_icon.swift`)로 즉시 렌더링하여 번들에 탑재합니다.
-- **드래그 앤 드롭 DMG 인스톨러 생성**: 재개발 완료 후 최종 결과물을 사용자가 `/Applications` 폴더로 바로 끌어다 놓아 설치할 수 있도록 `/Applications` 심볼릭 링크와 볼륨 아이콘이 탑재된 고압축 `.dmg`(`scripts/create_dmg.sh`)를 원클릭으로 패키징합니다.
-- **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증, DMG 패키징까지 원스톱으로 처리합니다.
+- **프로젝트 맞춤형 드래그 앤 드롭 DMG 인스톨러 생성**: 재개발 완료 후 최종 결과물을 사용자가 `/Applications` 폴더로 바로 끌어다 놓아 설치할 수 있도록 프로젝트 고유의 볼륨 아이콘(`.VolumeIcon.icns`), 듀얼 테마 컬러 Retina 배경 아트(`scripts/generate_dmg_background.swift`), `/Applications` 심볼릭 링크가 결합된 고압축 `.dmg`(`scripts/create_dmg.sh`)를 원클릭으로 패키징합니다 ([`PROJECT_DMG_BRANDING_GUIDE.md`](docs/kr/PROJECT_DMG_BRANDING_GUIDE.md) 참고).
+- **규칙(Rules) 자동화**: 사용자가 앱 경로만 제공하면 `AGENTS.md`와 스킬 정의에 따라 에이전트가 자동 진단부터 명세 작성(`SPEC.md`), 신규 네이티브 개발, 오라클 검증, 맞춤형 DMG 패키징까지 원스톱으로 처리합니다.
 - **클린룸 원칙(Clean-Room)**: 원본 코드의 지적 재산권 침해를 막기 위해 분석(Room A)과 재개발(Room B)을 엄격히 분리합니다.
 - **Git 버전 관리**: 모든 문서, 템플릿, 규칙, 스크립트가 Git으로 완벽하게 추적됩니다.

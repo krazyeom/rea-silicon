@@ -148,25 +148,30 @@ codesign --force --deep --sign - ./build/my_tool_arm64
 
 ---
 
-## 6. 배포용 Drag-and-Drop DMG 생성 (/Applications 간편 설치)
+## 6. 프로젝트 특화형 Drag-and-Drop DMG 생성 (/Applications 간편 설치)
 
-최종 빌드된 macOS 애플리케이션 번들(`.app`)을 일반 사용자가 마우스 드래그 한 번으로 `/Applications` 폴더로 복사하여 설치할 수 있도록 표준 Apple UDZO 압축 `.dmg` 디스크 이미지를 제작합니다.
+최종 빌드된 macOS 애플리케이션 번들(`.app`)을 일반 사용자가 마우스 드래그 한 번으로 `/Applications` 폴더로 복사하여 설치할 수 있도록, 프로젝트의 시그니처 아이콘과 테마 색상이 반영된 표준 Apple UDZO 압축 `.dmg` 디스크 이미지를 제작합니다.
+
+> [!TIP]
+> 프로젝트 도메인별 테마 컬러 매트릭스 및 상세 브랜딩 지침은 [`docs/kr/PROJECT_DMG_BRANDING_GUIDE.md`](./PROJECT_DMG_BRANDING_GUIDE.md)를 참고하세요.
 
 ### 6.1 DMG 자동 생성 스크립트 실행
 ```bash
 # 1. 빌드된 .app 번들로부터 생성
 ./scripts/create_dmg.sh ./build/Calcuroo.app
 
-# 2. Swift 프로젝트 경로를 직접 전달 (자동 빌드 + 번들링 + DMG 생성)
-./scripts/create_dmg.sh ./projects/Calcuroo
-
-# 3. 출력 경로 및 아이콘 지정
-./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-1.0.0-arm64.dmg --icon ./Resources/AppIcon.icns
+# 2. 프로젝트 특화 테마 색상 및 부제를 지정하여 Retina 배경과 함께 생성
+./scripts/create_dmg.sh ./projects/Calcuroo ./dist/Calcuroo-1.0.0-arm64.dmg \
+  --icon ./Resources/AppIcon.icns \
+  --color1 "#10B981" \
+  --color2 "#047857" \
+  --subtitle "High-Precision Apple Silicon Calculator"
 ```
 
 ### 6.2 DMG 패키징 내부 동작
 1. **.app 번들 구조화**: `Contents/MacOS`, `Contents/Resources`, `Info.plist`, `PkgInfo` 자동 구성.
 2. **Apple Silicon Ad-hoc 서명**: Gatekeeper 및 macOS 커널 무결성 통과를 위한 `codesign` 적용.
 3. **`/Applications` 심볼릭 링크 탑재**: 사용자가 디스크 이미지를 열었을 때 앱 아이콘을 Applications 폴더 아이콘으로 바로 끌어다 놓을 수 있는 바로가기 탑재.
-4. **볼륨 아이콘 적용**: `AppIcon.icns`가 제공되면 마운트된 디스크 이미지 볼륨 자체의 아이콘으로 커스텀 지정.
-5. **UDZO 압축 & 무결성 검증**: `hdiutil`을 통해 고압축 읽기 전용 이미지 생성 후 체크섬 무결성 검증.
+4. **프로젝트 볼륨 아이콘 적용**: `AppIcon.icns`가 제공되면 마운트된 디스크 이미지 볼륨 자체의 아이콘(`.VolumeIcon.icns`)으로 커스텀 지정.
+5. **프로젝트 맞춤형 2x Retina 배경 아트 생성**: `scripts/generate_dmg_background.swift`를 통해 프로젝트 고유의 듀얼 컬러와 슬로건이 합성된 1280x800 배경 그래픽 자동 주입.
+6. **UDZO 압축 & 무결성 검증**: `hdiutil`을 통해 고압축 읽기 전용 이미지 생성 후 체크섬 무결성 검증.

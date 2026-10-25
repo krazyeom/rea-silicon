@@ -100,14 +100,15 @@ Execute the verification script or differential test runner:
 ```
 Confirm input/output equivalence against the test vectors recorded in `SPEC.md`.
 
-### Step 7: Packaging into Drag-and-Drop DMG (/Applications Installation)
-Package the application into a distribution `.dmg` featuring an `/Applications` drag-and-drop link:
+### Step 7: Packaging into Project-Themed Drag-and-Drop DMG (/Applications Installation)
+In accordance with `docs/en/PROJECT_DMG_BRANDING_GUIDE.md`, package the application into a distribution `.dmg` featuring the project's signature icon, theme colors, custom volume icon, and an `/Applications` drag-and-drop link:
 ```bash
-./scripts/create_dmg.sh rebuilt_app
-# Or for a standalone .app:
-./scripts/create_dmg.sh dist/Calcuroo.app dist/Calcuroo-1.0.0-arm64.dmg
+./scripts/create_dmg.sh rebuilt_app dist/Calcuroo-1.0.0-arm64.dmg \
+  --icon rebuilt_app/Resources/AppIcon.icns \
+  --color1 "#10B981" --color2 "#047857" \
+  --subtitle "High-Precision Apple Silicon Calculator"
 ```
-The script automates bundle packaging, `Info.plist` generation, `AppIcon.icns` inclusion, Apple Silicon ad-hoc signing, `/Applications` symlink creation, and UDZO compression.
+The script automates bundle packaging, `Info.plist` generation, `AppIcon.icns` inclusion, Apple Silicon ad-hoc signing, `.VolumeIcon.icns` setting, Retina background art (`dmg_background.png`) generation, `/Applications` symlink creation, and UDZO compression.
 
 ---
 

@@ -100,14 +100,15 @@ codesign --force --deep --sign - .build/arm64-apple-macosx/release/<바이너리
 ```
 `SPEC.md`에 정의된 모든 테스트 케이스 벡터에 대해 원본과 재개발 결과물의 입출력 동치성을 확인합니다.
 
-### 7단계: 배포용 Drag-and-Drop DMG 생성 (/Applications 설치 간편화)
-macOS 사용자가 앱을 손쉽게 `/Applications` 폴더로 드래그하여 설치할 수 있도록 `.dmg` 인스톨러를 제작합니다:
+### 7단계: 프로젝트 맞춤형 Drag-and-Drop DMG 생성 (/Applications 설치 간편화)
+macOS 사용자가 앱을 손쉽게 `/Applications` 폴더로 드래그하여 설치할 수 있도록, `docs/kr/PROJECT_DMG_BRANDING_GUIDE.md` 규격에 맞추어 프로젝트의 시그니처 아이콘, 테마 색상, Retina 배경이 반영된 `.dmg` 인스톨러를 제작합니다:
 ```bash
-./scripts/create_dmg.sh rebuilt_app
-# 또는 빌드된 .app 지정:
-./scripts/create_dmg.sh dist/Calcuroo.app dist/Calcuroo-1.0.0-arm64.dmg
+./scripts/create_dmg.sh rebuilt_app dist/Calcuroo-1.0.0-arm64.dmg \
+  --icon rebuilt_app/Resources/AppIcon.icns \
+  --color1 "#10B981" --color2 "#047857" \
+  --subtitle "High-Precision Apple Silicon Calculator"
 ```
-스크립트는 자동으로 `.app` 번들 구성, `Info.plist` 및 `AppIcon.icns` 탑재, Ad-hoc 코드 서명, `/Applications` 심볼릭 링크 생성, UDZO 압축 이미지 검증을 완료합니다.
+스크립트는 자동으로 `.app` 번들 구성, `Info.plist` 및 `AppIcon.icns` 탑재, Ad-hoc 코드 서명, 볼륨 아이콘 주입(`.VolumeIcon.icns`), 프로젝트 맞춤형 Retina 배경(`dmg_background.png`) 생성, `/Applications` 심볼릭 링크 생성, UDZO 압축 이미지 검증을 완료합니다.
 
 ---
 

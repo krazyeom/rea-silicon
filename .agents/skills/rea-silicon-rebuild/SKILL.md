@@ -26,6 +26,7 @@ Follow these exact steps:
 Before executing changes or answering, consult:
 - `docs/en/WORKFLOW_AND_RULES.md` / `docs/kr/WORKFLOW_AND_RULES.md`
 - `docs/en/MAC_SILICON_REBUILD_GUIDE.md` / `docs/kr/MAC_SILICON_REBUILD_GUIDE.md`
+- `docs/en/PROJECT_DMG_BRANDING_GUIDE.md` / `docs/kr/PROJECT_DMG_BRANDING_GUIDE.md`
 - `docs/en/SPEC_TEMPLATE.md` / `docs/kr/SPEC_TEMPLATE.md`
 
 ### Step 2: Run Target Inspection
@@ -70,9 +71,10 @@ Run test oracle to ensure input/output equivalence:
 python3 ./scripts/test_oracle.py --original "<TARGET_PATH>" --rebuilt "<REBUILT_PATH>" --args <SAMPLE_ARGS>
 ```
 
-### Step 7: Package into Drag-and-Drop `.dmg` Installer
-Package the rebuilt app or Swift project into a compressed `.dmg` installer equipped with an `/Applications` symlink for seamless installation:
+### Step 7: Package into Project-Themed Drag-and-Drop `.dmg` Installer
+Following `docs/en/PROJECT_DMG_BRANDING_GUIDE.md`, package the rebuilt app into a compressed `.dmg` installer equipped with the project's custom volume icon, Retina background art, and an `/Applications` symlink:
 ```bash
-./scripts/create_dmg.sh <PROJECT_OR_APP_PATH> [OUTPUT_DMG]
-# Example: ./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-arm64.dmg
+./scripts/create_dmg.sh <PROJECT_OR_APP_PATH> [OUTPUT_DMG] --icon <ICON_PATH> --color1 "<Hex1>" --color2 "<Hex2>" --subtitle "<Tagline>"
+# Example:
+# ./scripts/create_dmg.sh ./build/Calcuroo.app ./dist/Calcuroo-arm64.dmg --icon ./Resources/AppIcon.icns --color1 "#10B981" --color2 "#047857" --subtitle "Native Calculator"
 ```
